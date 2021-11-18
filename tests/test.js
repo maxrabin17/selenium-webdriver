@@ -15,27 +15,31 @@ async function tests() {
     // BROWSER DRIVER
     let driver = await new Builder().forBrowser("chrome").build();
     
-
     // FIRST TEST CHECKS TO SEE IF YOU CAN CREATE AN ACCOUNT WITH A **INVALID** EMAIL
-    await driver.get("https://sso.zeachable.com/secure/123/identity/sign_up/with_email");
-    await driver.findElement(By.id("user_name")).sendKeys(`${firstTest.username}`)
-    await driver.findElement(By.id("user_email")).sendKeys(`${firstTest.email}`)
-    await driver.findElement(By.id("password")).sendKeys(`${firstTest.pass}`, Key.RETURN)
+    await driver.get("https://sso.zeachable.com/secure/123/identity/sign_up/with_email"); // SIGN UP PAGE
+    await driver.findElement(By.id("user_name")).sendKeys(`${firstTest.username}`) // FILLS SIGN IN INFO
+    await driver.findElement(By.id("user_email")).sendKeys(`${firstTest.email}`) // FILLS SIGN IN INFO
+    await driver.findElement(By.id("password")).sendKeys(`${firstTest.pass}`, Key.RETURN) // FILLS SIGN IN INFO AND SUBMITS FORM
     
     
     // SECOND TEST CHECKS TO SEE IF YOU CAN LOGIN WITH A **INVALID** EMAIL
     await driver.get("https://sso.zeachable.com/secure/123/identity/login"); // LOGIN PAGE
-    await driver.findElement(By.id("email")).sendKeys(`${firstTest.email}`) // 
-    await driver.findElement(By.id("password")).sendKeys(`${firstTest.pass}`, Key.RETURN)
+    await driver.findElement(By.id("email")).sendKeys(`${firstTest.email}`) // FILLS LOGIN INFO
+    await driver.findElement(By.id("password")).sendKeys(`${firstTest.pass}`, Key.RETURN) // FILLS LOGIN INFO AND SUBMITS FORM
     
-    // THIRD TEST CHECKS TO SEE 
-    await driver.get("https://sso.zeachable.com/secure/123/identity/sign_up/with_email");
-    await driver.findElement(By.id("user_name")).sendKeys(`${secondTest.username}`)
-    await driver.findElement(By.id("user_email")).sendKeys(`${email}`)
-    await driver.findElement(By.id("password")).sendKeys(`${secondTest.pass}`, Key.RETURN)
-    await driver.get("https://takehome.zeachable.com/sign_out")
-    await driver.get("https://sso.zeachable.com/secure/123/identity/login");
-    await driver.findElement(By.id("email")).sendKeys(`${email}`)
-    await driver.findElement(By.id("password")).sendKeys(`${secondTest.pass}`, Key.RETURN)
+
+    // THIRD TEST CHECKS TO SEE IF USER CAN SIGN UP WITH A **VALID** EMAIL
+    await driver.get("https://sso.zeachable.com/secure/123/identity/sign_up/with_email"); // SIGN UP PAGE
+    await driver.findElement(By.id("user_name")).sendKeys(`${secondTest.username}`) //FILLS INFO
+    await driver.findElement(By.id("user_email")).sendKeys(`${email}`) // FILLS INFO
+    await driver.findElement(By.id("password")).sendKeys(`${secondTest.pass}`, Key.RETURN) // FILLS INFO
+    await driver.get("https://takehome.zeachable.com/sign_out") // SIGNS USER OUT
+    
+
+    // FOURTH TEST CHECKS TO SEE IF USER CAN LOGIN WITH A **VALID** EMAIL
+    await driver.get("https://sso.zeachable.com/secure/123/identity/login"); //SIGNS USER IN
+    await driver.findElement(By.id("email")).sendKeys(`${email}`) // FILLS INFO
+    await driver.findElement(By.id("password")).sendKeys(`${secondTest.pass}`, Key.RETURN) // FILLS INFO
+    await driver.close() // CLOSES DRIVER
 }
 tests()
